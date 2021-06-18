@@ -108,6 +108,12 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
     private int textCursorColor;
     private int highlightedTextColor;
 
+    private View.OnFocusChangeListener onFocusChangeListener = null;
+
+    public void setOnFocusChangeListener(View.OnFocusChangeListener listener) {
+        onFocusChangeListener = listener;
+    }
+
     public MaterialSearchBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
@@ -962,6 +968,9 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
             imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
         } else {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+        if (onFocusChangeListener != null) {
+            onFocusChangeListener.onFocusChange(v, hasFocus);
         }
     }
 
